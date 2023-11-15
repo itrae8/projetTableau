@@ -1,0 +1,42 @@
+<table>
+  <thead>
+    <tr>
+      <th colspan="6">Personnes</th>
+    </tr>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Date de naissance</th>
+      <th>Age</th>
+      <th>Vivant</th>
+      <th>Photo</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (personne of personnes; track personne.id){
+    <tr (click)="selectionEvent($event, personne)" [ngClass]="{'selected': personne.id === selection?.id}"
+      [ngStyle]="{'text-decoration' : personne.id === selection?.id ? 'underline' : 'none'}">
+      <td>{{personne.nom | uppercase}}</td>
+      <td>{{personne.prenom}}</td>
+      <td>{{personne.dateDeNaissance | date: 'à HH:mm, le d MMMM yyyy' | uppercase}}</td>
+      <td>{{personne.age}}</td>
+      <td>
+        @if (personne.vivant){
+        <img class="icone" src="/assets/icones/valide.png">
+        } @else {
+        <img class="icone" src="/assets/icones/invalide.png">
+        }
+      </td>
+      <td><img src="{{personne.photo}}" title="{{personne.prenom}}"></td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+<ng-container *ngIf="selection; else pasDePersonneSelectionneeTemplate">
+  <app-details [personne]="selection" (changerStatutEvent)="changerStatut($event)"></app-details>
+</ng-container>
+
+<ng-template #pasDePersonneSelectionneeTemplate>
+  Aucune personne sélectionnée
+</ng-template>

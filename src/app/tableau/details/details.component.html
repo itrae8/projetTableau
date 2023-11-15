@@ -1,0 +1,4 @@
+<p>La personne sélectionnée a l'id suivant : {{personne.id}}</p>
+<p>Vous pouvez changer son nom :</p>
+<input [(ngModel)]="personne.nom">
+<button (click)="changerStatut()">Changer le statut vivant ou non de {{personne.prenom}} {{personne.nom}} </button>
